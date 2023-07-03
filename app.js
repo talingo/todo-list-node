@@ -15,9 +15,9 @@ const main = async () => {
 
   if (tasksDB){
     //set tasks
+    tasks.loadTasksFromArray(tasksDB)
   }
 
-  await pause();
   do {
     // prints the menu
     opt = await inquirerMenu();
@@ -30,12 +30,13 @@ const main = async () => {
         break;
 
       case "2":
-        console.log(tasks.arrList);
+        tasks.allTasksList();
         break;
     }
 
-    // saveDB( tasks.arrList )
+    saveDB( tasks.arrList )
 
+    await pause();
   } while (opt !== "0");
   //   pause();
 };
