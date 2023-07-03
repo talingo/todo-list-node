@@ -1,6 +1,6 @@
 require("colors");
 
-const { inquirerMenu, pause, readInput, deleteTasksList, confirm } = require("./helpers/inquirer");
+const { inquirerMenu, pause, readInput, deleteTasksList, confirm, showListAsChecklist } = require("./helpers/inquirer");
 const { saveDB, readDB } = require("./helpers/FileCRUD");
 const Tasks = require("./models/tasks");
 
@@ -40,6 +40,11 @@ const main = async () => {
       case "4":
         tasks.listPendingCompleted(false);
       break;
+
+      case "5":
+       const ids = await showListAsChecklist(tasks.arrList);
+        tasks.toggleCompletedTasks( ids )
+        break;
 
       case "6":
         const id = await deleteTasksList ( tasks.arrList);

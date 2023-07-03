@@ -18,9 +18,9 @@ class Tasks {
     this._list = {};
   }
 
-  deleteTask(id=''){
-    if (this._list[id]){
-        delete this._list[id];
+  deleteTask(id = "") {
+    if (this._list[id]) {
+      delete this._list[id];
     }
   }
 
@@ -48,20 +48,33 @@ class Tasks {
   listPendingCompleted(completed = true) {
     console.log();
     let index = 0;
-    this.arrList.forEach(task => {
+    this.arrList.forEach((task) => {
       const { description, completedOn } = task;
-      const status = (completedOn)
-                        ? "Completed".green 
-                        : "Pending".red;
+      const status = completedOn ? "Completed".green : "Pending".red;
 
-
-    if (completed && completedOn) {
+      if (completed && completedOn) {
         index += 1;
-           console.log(`${index.green}. ${description} :: ${completedOn.green}`);
+        console.log(`${index.green}. ${description} :: ${completedOn.green}`);
       } else if (!completed && !completedOn) {
         index += 1;
-         console.log(`${index.green}. ${description} :: ${status}`);
-    }})
+        console.log(`${index.green}. ${description} :: ${status}`);
+      }
+    });
+  }
+  toggleCompletedTasks(ids = []) {
+    ids.forEach((id) => {
+      const task = this._list[id];
+      if (!task.completedOn) {
+        task.completedOn = new Date().toISOString();
+      }
+    });
+
+    this.arrList.forEach((task) => {
+      if (!ids.includes(task.id)) {
+        this._list[task.id].completedOn = null;
+        task.completedOn = null;
+      }
+    });
   }
 }
 module.exports = Tasks;
