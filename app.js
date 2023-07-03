@@ -31,7 +31,15 @@ const main = async () => {
 
       case "2":
         tasks.allTasksList();
+      break;
+
+      case "3":
+        tasks.listPendingCompleted(true);
         break;
+
+      case "4":
+        tasks.listPendingCompleted(false);
+      break;
     }
 
     saveDB( tasks.arrList )

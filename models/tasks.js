@@ -1,50 +1,61 @@
-const Task = require('./task')
-
+const Task = require("./task");
 
 class Tasks {
-    _list = {};
+  _list = {};
 
-    get arrList(){
+  get arrList() {
+    const list = [];
 
-        const list = [];
+    Object.keys(this._list).forEach((key) => {
+      const task = this._list[key];
+      list.push(task);
+    });
 
-        Object.keys(this._list).forEach(key =>{
-            const task = this._list[key];
-            list.push(task);
-        })
+    return list;
+  }
 
-        return list
-    }
+  constructor() {
+    this._list = {};
+  }
 
-    constructor(){
-        this._list = {};
-    }
+  loadTasksFromArray(tasks = []) {
+    tasks.forEach((task) => {
+      this._list[task.id] = task;
+    });
+  }
 
-    loadTasksFromArray( tasks = []){
+  createTask(description = "") {
+    const task = new Task(description);
+    this._list[task.id] = task;
+  }
 
-        tasks.forEach(task =>{
-            this._list[task.id] = task;
+  allTasksList() {
+    console.log();
+    this.arrList.forEach((task, i) => {
+      const index = `${i + 1}`.green;
+      const { description, completedOn } = task;
+      const status = completedOn ? "Completed".green : "Pending".red;
+      console.log(`${index}. ${description} :: ${status}`);
+    });
+  }
 
-        })
-    }
+  listPendingCompleted(completed = true) {
+    console.log();
+    let index = 0;
+    this.arrList.forEach(task => {
+      const { description, completedOn } = task;
+      const status = (completedOn)
+                        ? "Completed".green 
+                        : "Pending".red;
 
-    createTask(description = ''){
-        const task = new Task(description);
-        this._list[task.id] = task;
-    }
 
-    allTasksList(){
-        
-        console.log();
-        this.arrList.forEach((task, i) =>{
-
-            const index = `${i+1}`.green;
-            const {description, completedOn} = task
-            const status = (completedOn) ? 'Completed'.green : 'Pending'.red;
-            console.log(`${index}. ${description} :: ${status}`);
-        })
-        
-    }
+    if (completed && completedOn) {
+        index += 1;
+           console.log(`${index.green}. ${description} :: ${completedOn.green}`);
+      } else if (!completed && !completedOn) {
+        index += 1;
+         console.log(`${index.green}. ${description} :: ${status}`);
+    }})
+  }
 }
-
-module.exports = Tasks
+module.exports = Tasks;
