@@ -81,6 +81,7 @@ const readInput = async (message) => {
 };
 
 const deleteTasksList = async (tasks = []) => {
+
   const choices = tasks.map((task, i) => {
     const index = `${i + 1}.`.green;
 
@@ -89,6 +90,12 @@ const deleteTasksList = async (tasks = []) => {
       name: `${index} ${task.description}`,
     };
   });
+
+  choices.unshift({
+    value: '0',
+    name: '0. '.green + 'Back to the Menu',
+  })
+
   const questions = [
     {
       type: "list",

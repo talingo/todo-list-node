@@ -43,11 +43,13 @@ const main = async () => {
 
       case "6":
         const id = await deleteTasksList ( tasks.arrList);
-        const confirmDeletion = await confirm('Delete this task?')
+        if (id !== '0') {
+
+          const confirmDeletion = await confirm('Delete this task?')
         if ( confirmDeletion ) {
           tasks.deleteTask(id);
           console.log('Task deleted')
-        }
+        }}
         break;
     }
 
