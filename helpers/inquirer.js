@@ -9,31 +9,31 @@ const menuOptions = [
     choices: [
       {
         value: "1",
-        name: `${'1.'.green} Create task`,
+        name: `${"1.".green} Create task`,
       },
       {
         value: "2",
-        name: `${'2.'.green} Tasks list`,
+        name: `${"2.".green} Tasks list`,
       },
       {
         value: "3",
-        name: `${'3.'.green} Completed tasks`,
+        name: `${"3.".green} Completed tasks`,
       },
       {
         value: "4",
-        name: `${'4.'.green} Pending tasks`,
+        name: `${"4.".green} Pending tasks`,
       },
       {
         value: "5",
-        name: `${'5.'.green} Complete task(s)`,
+        name: `${"5.".green} Complete task(s)`,
       },
       {
         value: "6",
-        name: `${'6.'.green} Delete task`,
+        name: `${"6.".green} Delete task`,
       },
       {
         value: "0",
-        name: `${'0.'.green} Escape`,
+        name: `${"0.".green} Escape`,
       },
     ],
   },
@@ -45,44 +45,79 @@ const inquirerMenu = async () => {
   console.log("   Select an option".white);
   console.log("========================\n".green);
 
-  const {option} = await inquirer.prompt(menuOptions);
+  const { option } = await inquirer.prompt(menuOptions);
   return option;
 };
 
-const pause = async() => {
-
-    const question = [
-        {
-            type: 'input',
-            name: 'enter',
-            message: `Press ${ 'ENTER'.green } to continue`
-        }
-    ]
-
-    console.log('\n')
-    await inquirer.prompt(question)
-}
-
-const readInput = async( message) => {
-
+const pause = async () => {
   const question = [
     {
-      type: 'input',
-      name: 'description',
+      type: "input",
+      name: "enter",
+      message: `Press ${"ENTER".green} to continue`,
+    },
+  ];
+
+  console.log("\n");
+  await inquirer.prompt(question);
+};
+
+const readInput = async (message) => {
+  const question = [
+    {
+      type: "input",
+      name: "description",
       message,
-      validate(value){
-        if( value.length === 0 ){
-          'Please enter a description'
-        } return true
-      }
+      validate(value) {
+        if (value.length === 0) {
+          ("Please enter a description");
+        }
+        return true;
+      },
+    },
+  ];
+  const { description } = await inquirer.prompt(question);
+  return description;
+};
+
+const deleteTasksList = async (tasks = []) => {
+  const choices = tasks.map((task, i) => {
+    const index = `${i + 1}.`.green;
+
+    return {
+      value: task.id,
+      name: `${index} ${task.description}`,
+    };
+  });
+  const questions = [
+    {
+      type: "list",
+      name: "id",
+      message: "Delete",
+      choices,
+    },
+  ];
+  const { id } = await inquirer.prompt(questions);
+  return id;
+};
+
+const confirm = async (message) => {
+  const question = [
+    {
+      type: 'confirm',
+      name: 'ok',
+      message
     }
   ]
-  const { description } = await inquirer.prompt(question);
-  return description
+  const {ok} = await inquirer.prompt(question)
+  return ok
 }
+
 
 module.exports = {
   inquirerMenu,
   pause,
-  readInput
+  readInput,
+  deleteTasksList,
+  confirm
 };
