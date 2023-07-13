@@ -1,4 +1,4 @@
-const Task = require("./task");
+import Task from "./task.js";
 
 class Tasks {
   _list = {};
@@ -77,4 +77,4 @@ class Tasks {
     });
   }
 }
-module.exports = Tasks;
+export default Tasks;

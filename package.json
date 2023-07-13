@@ -1,17 +1,17 @@
 {
   "name": "04-todo-list",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
+  "description": "To Do List",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
-    "inquirer": "^7.3.3",
+    "inquirer": "^9.2.7",
     "uuid": "^9.0.0"
   }
 }

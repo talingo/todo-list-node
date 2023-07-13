@@ -1,21 +1,26 @@
-require("colors");
+import "colors";
 
-const { inquirerMenu, pause, readInput, deleteTasksList, confirm, showListAsChecklist } = require("./helpers/inquirer");
-const { saveDB, readDB } = require("./helpers/FileCRUD");
-const Tasks = require("./models/tasks");
+import {
+  inquirerMenu,
+  pause,
+  readInput,
+  deleteTasksList,
+  confirm,
+  showListAsChecklist,
+} from "./helpers/inquirer.js";
+import { saveDB, readDB } from "./helpers/FileCRUD.js";
+import Tasks from "./models/tasks.js";
 
 console.clear();
-
 const main = async () => {
-  
   let opt = "";
   const tasks = new Tasks();
 
   const tasksDB = readDB();
 
-  if (tasksDB){
+  if (tasksDB) {
     //set tasks
-    tasks.loadTasksFromArray(tasksDB)
+    tasks.loadTasksFromArray(tasksDB);
   }
 
   do {
@@ -31,7 +36,7 @@ const main = async () => {
 
       case "2":
         tasks.allTasksList();
-      break;
+        break;
 
       case "3":
         tasks.listPendingCompleted(true);
@@ -39,30 +44,29 @@ const main = async () => {
 
       case "4":
         tasks.listPendingCompleted(false);
-      break;
+        break;
 
       case "5":
-       const ids = await showListAsChecklist(tasks.arrList);
-        tasks.toggleCompletedTasks( ids )
+        const ids = await showListAsChecklist(tasks.arrList);
+        tasks.toggleCompletedTasks(ids);
         break;
 
       case "6":
-        const id = await deleteTasksList ( tasks.arrList);
-        if (id !== '0') {
-
-          const confirmDeletion = await confirm('Delete this task?')
-        if ( confirmDeletion ) {
-          tasks.deleteTask(id);
-          console.log('Task deleted')
-        }}
+        const id = await deleteTasksList(tasks.arrList);
+        if (id !== "0") {
+          const confirmDeletion = await confirm("Delete this task?");
+          if (confirmDeletion) {
+            tasks.deleteTask(id);
+            console.log("Task deleted");
+          }
+        }
         break;
     }
 
-    saveDB( tasks.arrList )
+    saveDB(tasks.arrList);
 
     await pause();
   } while (opt !== "0");
-  //   pause();
+  pause();
 };
-
 main();

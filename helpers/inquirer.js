@@ -1,7 +1,7 @@
-const inquirer = require("inquirer");
-require("colors");
+import inquirer from "inquirer";
+import "colors";
 
-const menuOptions = [
+export const menuOptions = [
   {
     type: "list",
     name: "option",
@@ -39,7 +39,7 @@ const menuOptions = [
   },
 ];
 
-const inquirerMenu = async () => {
+export const inquirerMenu = async () => {
   console.clear();
   console.log("========================".green);
   console.log("   Select an option".white);
@@ -49,7 +49,7 @@ const inquirerMenu = async () => {
   return option;
 };
 
-const pause = async () => {
+export const pause = async () => {
   const question = [
     {
       type: "input",
@@ -62,7 +62,7 @@ const pause = async () => {
   await inquirer.prompt(question);
 };
 
-const readInput = async (message) => {
+export const readInput = async (message) => {
   const question = [
     {
       type: "input",
@@ -80,7 +80,7 @@ const readInput = async (message) => {
   return description;
 };
 
-const deleteTasksList = async (tasks = []) => {
+export const deleteTasksList = async (tasks = []) => {
   const choices = tasks.map((task, i) => {
     const index = `${i + 1}.`.green;
 
@@ -107,7 +107,7 @@ const deleteTasksList = async (tasks = []) => {
   return id;
 };
 
-const confirm = async (message) => {
+export const confirm = async (message) => {
   const question = [
     {
       type: "confirm",
@@ -119,7 +119,7 @@ const confirm = async (message) => {
   return ok;
 };
 
-const showListAsChecklist = async ( tasks = [] ) => {
+export const showListAsChecklist = async ( tasks = [] ) => {
 
   const choices = tasks.map( (task, i) => {
 
@@ -147,13 +147,4 @@ const showListAsChecklist = async ( tasks = [] ) => {
   ];
   const { ids } = await inquirer.prompt(question);
   return ids;
-};
-
-module.exports = {
-  inquirerMenu,
-  pause,
-  readInput,
-  deleteTasksList,
-  confirm,
-  showListAsChecklist
 };
